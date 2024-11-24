@@ -58,6 +58,9 @@ class TagListView(generic.ListView):
     model = Tag
     paginate_by = 3
 
+    def get_queryset(self) -> QuerySet[Tag]:
+        return Tag.objects.all().order_by("-id")
+
 
 class TagCreateView(TagBaseView, generic.CreateView):
     form_class = TagForm
