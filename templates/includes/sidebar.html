@@ -1,0 +1,7 @@
+<nav>
+  <h3>To-do App</h3>
+  <ul>
+    <li><a class="{% if request.path == '/' %} active {% endif %}" href="{% url 'app:home' %}">Home</a></li>
+    <li><a class="{% if request.path == '/tags/' %} active {% endif %}" href="{% url 'app:tags' %}">Tags</a></li>
+  </ul>
+</nav>
