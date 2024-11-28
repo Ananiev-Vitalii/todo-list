@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+TODO Tags
+{% endblock title %}
+
+{% block header %}
+TODO Tags
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+  <div class=" col-sm-12 col-md-12 col-lg-10">
+    <div class="row mb-3">
+      <div class="col text-right">
+        <a href="{% url 'app:tag-create' %}" class="btn btn-primary">Add Tag +</a>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col" class="col-md-10">Name</th>
+        <th scope="col" class="col-md-2">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for tag in tag_list %}
+      <tr class="">
+        <td><strong>{{ tag.name }}</strong></td>
+        <td>
+          <div class="d-flex">
+            <a href="{% url 'app:tag-update' tag.pk %}" class="btn btn-warning btn-sm mr-2">Update</a>
+            <a href="{% url 'app:tag-delete' tag.pk %}" class="btn btn-danger btn-sm mr-2">Delete</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

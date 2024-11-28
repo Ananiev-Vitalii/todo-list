@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+{% if request.resolver_match.url_name == 'tag-create' %}
+Create Tag
+{% elif request.resolver_match.url_name == 'tag-update' %}
+Update Tag
+{% endif %}
+{% endblock title %}
+
+{% block header %}
+{% if request.resolver_match.url_name == 'tag-create' %}
+Create a new tag
+{% elif request.resolver_match.url_name == 'tag-update' %}
+Update tag
+{% endif %}
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+  <div class="col-sm-12 col-md-8 col-lg-6">
+    {% crispy form %}
+  </div>
+</div>
+{% endblock content %}

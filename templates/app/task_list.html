@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+TODO list
+{% endblock title %}
+
+{% block header %}
+TODO List
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+  <div class="row mb-3">
+    <div class="col text-right">
+      <a href="{% url 'app:task-create' %}" class="btn btn-primary">Add Task +</a>
+    </div>
+  </div>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">Content</th>
+      <th scope="col">Created</th>
+      <th scope="col">Deadline</th>
+      <th scope="col">Tags</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for task in task_list %}
+    <tr class="{% if task.is_done %}table-success{% else %}table-danger{% endif %}">
+      <td><strong>{{ task.content }}</strong></td>
+      <td>{{ task.datetime_created }}</td>
+      <td>{% if task.deadline %}<span class="deadline">{{ task.deadline }}</span>
+        {% else %}No deadline{% endif %}
+      </td>
+      <td>
+        {% for tag in task.tags.all %}
+        <span class="badge badge-info">{{ tag.name }}</span>
+        {% endfor %}
+      </td>
+      <td>
+        <div class="d-flex">
+          <a href="{% url 'app:task-update' task.pk %}" class="btn btn-warning btn-sm mr-2">Update</a>
+          <a href="{% url 'app:task-delete' task.pk %}" class="btn btn-danger btn-sm mr-2">Delete</a>
+          <form method="post" action="{% url 'app:task_complete_undo' task.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="{% if task.is_done %}undo{% else %}complete{% endif %}">
+            <button type="submit" class="btn btn-sm {% if task.is_done %}btn-secondary{% else %}btn-success{% endif %}">
+              {% if task.is_done %}Undo{% else %}Complete{% endif %}
+            </button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
